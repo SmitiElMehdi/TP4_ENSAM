@@ -61,7 +61,7 @@ int main(){
         printf("Choisissez une option : ");
         scanf("%d",&choix);
         if(choix!=1 && choix!=2 && choix!=3){
-            printf("Option non inclusive veuillez reesayer\n");
+            printf("Option non incluse veuillez reesayer\n");
         }
     } 
     switch(choix)
