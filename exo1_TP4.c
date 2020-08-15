@@ -100,6 +100,7 @@ int main(){
             }
             
         }
+        free(tableau);
         }
         break;
         case 2 : {
@@ -118,6 +119,7 @@ int main(){
                 }
             }
             printf("La trace de la matrice est : %d",trace(tableau,m));
+            free(tableau);
             }
             break;
         case 3 : {
@@ -148,8 +150,11 @@ int main(){
                 }
                 printf("\n");
             }
+            free(T);
+            free(M);
         }
     
     }
     
     return 0;
+}
