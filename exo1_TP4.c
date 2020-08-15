@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-int diagonale(int *T,int m){
+int diagonale(int m,int **T){
     int k = 1;
     for(int i = 0 ; i < m ; i++){
         for(int j = 0 ; j < m ; j++){
             if(j!=i){
-                if(*(T+i*m+j)!=0){
+                if(T[i][j]!=0){
                     k=0;
                 }
             }
@@ -13,12 +13,12 @@ int diagonale(int *T,int m){
     }
     return k;
 }
-int triangulaire_sup(int *T,int m){
+int triangulaire_sup(int **T,int m){
     int k = 1;
     for(int i = 0 ; i < m ; i++){
         for(int j = 0 ; j < i ; j++){
             if(j!=i){
-                if(*(T+i*m+j)!=0){
+                if(T[i][j]!=0){
                     k=0;
                 }
             }
@@ -26,12 +26,12 @@ int triangulaire_sup(int *T,int m){
     }
     return k;   
 }
-int triangulaire_inf(int *T,int m){
+int triangulaire_inf(int **T,int m){
     int k = 1;
     for(int i = 0 ; i < m ; i++){
         for(int j = i ; j < m ; j++){
             if(j!=i){
-                if(*(T+i*m+j)!=0){
+                if(T[i][j]!=0){
                     k=0;
                 }
             }
@@ -39,17 +39,17 @@ int triangulaire_inf(int *T,int m){
     }
     return k;   
 }
-int trace(int *T,int m){
+int trace(int **T,int m){
     int s=0;
     for(int i = 0; i < m ;i++){
-        s+=*((T+i*m)+i);
+        s+=T[i][i];
     }
     return s;
 }
-int **transpo(int *M,int *T,int n,int m){
+void transpo(int n,int m,int **T,int **M){
     for(int i = 0 ; i < n; i++){
         for(int j = 0 ; j <m ;j++){
-            *(T+j*n+i)= *(M+i*m+j);
+            T[j][i] = M[i][j];
         }
     }
 }
@@ -70,17 +70,18 @@ int main(){
         int m;
         printf("Entrez le nombre de ligne que vous souhaitez : ");
         scanf("%d",&m);
-        int *tableau[m];
+        int **tableau;
+        tableau = malloc(m*sizeof(int));
         for(int i = 0; i < m ; i++){
-            tableau[i] = (int *)malloc(m*sizeof(int));
+            tableau[i] = malloc(m*sizeof(int));
         }
         for(int i =0 ; i < m ; i++){
             for(int j = 0; j < m ; j++){
                 printf("Arr[%d][%d] : ",i+1,j+1);
-                scanf("%d",(tableau+i*m+j));
+                scanf("%d",&tableau[i][j]);
             }
         }
-        if(diagonale(tableau,m))
+        if(diagonale(m,tableau))
         {
             printf("La matrice est diagonale \n");
         }
@@ -105,17 +106,18 @@ int main(){
             int m;
             printf("Entrez le nombre de ligne que vous souhaitez : ");
             scanf("%d",&m);
-            int *tableau[m];
+            int **tableau;
+            tableau = malloc(m*sizeof(int));
             for(int i = 0; i < m ; i++){
                 tableau[i] = (int *)malloc(m*sizeof(int));
             }
             for(int i =0 ; i < m ; i++){
                 for(int j = 0; j < m ; j++){
                     printf("Arr[%d][%d] : ",i+1,j+1);
-                    scanf("%d",(tableau+i*m+j));
+                    scanf("%d",&tableau[i][j]);
                 }
             }
-            printf("La trace de la matrice est : %d",trace((int*)tableau,m));
+            printf("La trace de la matrice est : %d",trace(tableau,m));
             }
             break;
         case 3 : {
@@ -124,15 +126,22 @@ int main(){
             scanf("%d",&n);
             printf("Entrez le nombre de colonnes souhaitees : ");
             scanf("%d",&m);
-            int M[n][m];
+            int **M;
+            M = malloc(n*sizeof(n));
+            for(int i = 0 ; i < n ; i++){
+                M[i] = malloc(m*sizeof(int));
+            }
             for (int i = 0; i < n ; i++){
                 for(int j = 0; j < m ; j++){
                     printf("M[%d][%d] : ",i+1,j+1);
                     scanf("%d",&M[i][j]);
                 }
             }
-            int T[m][n];
-            transpo((int*)M,(int*)T,n,m);
+            int **T = malloc(m*sizeof(n));
+            for(int i = 0 ; i < m ; i++){
+                T[i] = malloc(n*sizeof(int));
+            }
+            transpo(n,m,T,M);
             for(int i = 0; i< m;i++){
                 for(int j = 0; j < n ; j++){
                     printf("%d ",T[i][j]);
@@ -144,4 +153,3 @@ int main(){
     }
     
     return 0;
-}
