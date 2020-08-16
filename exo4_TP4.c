@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-void p_tab(int n,int T[n][n]){
+void p_tab(int n,int **T){
     int count = 1;
     for(int i = 0 ; i < n; i++){
         for(int j = 0 ; j < n ; j++){
@@ -10,7 +10,7 @@ void p_tab(int n,int T[n][n]){
         }
     }
 }
-void d_tab(int n,int T[n][n]){
+void d_tab(int n,int **T){
     int count = 1;
     for(int i = 0 ; i < n ; i++){
         int k = pow(-1,i);
@@ -20,7 +20,7 @@ void d_tab(int n,int T[n][n]){
     }
 }
 
-void t_tab(int n,int T[n][n]){ //Aktar tableau m3nkch
+void t_tab(int n,int **T){ //Aktar tableau m3nkch
     int count = 1;
     int k = 1;
     int v = 1;
@@ -57,7 +57,7 @@ void t_tab(int n,int T[n][n]){ //Aktar tableau m3nkch
     }
 }
 
-void q_tab(int n,int T[n][n]){
+void q_tab(int n,int **T){
     int l1_i=0;
     int l2_i=n-1;
     int l3_j=0;
@@ -99,10 +99,14 @@ void q_tab(int n,int T[n][n]){
     }
 }
 int main(){
-    int n,choix;
+    int n,choix=0;
     printf("Choisissez un nombre n : ");
     scanf("%d",&n);
-    int T[n][n];
+    int **T;
+    T = malloc(n*sizeof(int*));
+    for(int i = 0 ; i < n ; i++){
+        T[i] = malloc(n*sizeof(int));
+    }
     while(choix!=1 && choix!=2 && choix!=3 && choix!=4){
         printf("Choisissez un nombre de 1 a 4 pour selectionner un tableau a realiser : ");
         scanf("%d",&choix);
