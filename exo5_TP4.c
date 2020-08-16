@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int ver_mag(int n,int T[n][n]){
+int ver_mag(int n,int **T){
     int control = 0;
     int test_val3=0;
     for(int i = 0 ; i < n;i++){
@@ -26,11 +26,11 @@ int ver_mag(int n,int T[n][n]){
     }
     return 1;
 }
-/*Méthodologie pour la construite du carré : position initiale de 1 se trouvant au milieu, on peut se repérer en l'utilisant donc pour n'importe quel n
+/*Méthodologie pour la construite du carré : position initiale de 1 se trouvant au milieu, on peut se répérer en l'utilisant donc pour n'importe quel n
 ensuite pour les autres chiffres il suffit  de faire un mouvement en bas soit i++ et un mouvement à droite soit j++
 si la case qu'on cible par ce déplacement est remplie par un autre chiffre on descend de deux cases au lieu
-au niveau des extremums de la matrice s'il n'y a plus de place pour descendre en bas dans notre déplacement nous apparaiterons en haut et de même pour la gauche et la droite*/
-int square_maker(int n, int T[n][n]){
+au niveau de las extremums de la matrice s'il n'y a plus de place pour descendre en bas dans notre déplacement nous apparaiterons en haut et de même pour la gauche et la droite*/
+int square_maker(int n, int **T){
     for(int i = 0; i < n; i++){
         for(int j = 0; j < n ; j++){
             T[i][j] = 0;
@@ -71,7 +71,11 @@ int main(){
         printf("Entrez un nombre n impaire : ");
         scanf("%d",&n);
     }
-    int T[n][n];
+    int **T;
+    T = malloc(n*sizeof(int *));
+    for(int i = 0 ; i < n; i++){
+        T[i] = malloc(n*sizeof(int));
+    }
     square_maker(n,T);
     for(int i = 0 ; i < n ; i++){
         for(int j = 0 ; j < n ; j++){
